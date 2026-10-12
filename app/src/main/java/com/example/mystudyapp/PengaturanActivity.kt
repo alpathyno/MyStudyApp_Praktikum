@@ -28,9 +28,10 @@ class PengaturanActivity : AppCompatActivity() {
         val rgTema = findViewById<RadioGroup>(R.id.rgTema)
         val rgUkuran = findViewById<RadioGroup>(R.id.rgUkuran)
         val swNotifikasi = findViewById<SwitchCompat>(R.id.swNotifikasi)
+        val rgAksen = findViewById<RadioGroup>(R.id.rgAksen)
 
         // 1) TAMPILKAN KEADAAN AWAL dari pengaturan yang tersimpan
-        isiKeadaanAwal(rgBahasa, rgTema, rgUkuran, swNotifikasi)
+        isiKeadaanAwal(rgBahasa, rgTema, rgUkuran, rgAksen, swNotifikasi)
 
         // 2) BARU pasang listener: setiap perubahan disimpan & diterapkan
         rgBahasa.setOnCheckedChangeListener { _, id ->
@@ -59,6 +60,16 @@ class PengaturanActivity : AppCompatActivity() {
             perbaruiRingkasan()
         }
 
+        rgAksen.setOnCheckedChangeListener { _, id ->
+            val nilai = when (id) {
+                R.id.rbHijau -> SettingsManager.AKSEN_HIJAU
+                R.id.rbUngu  -> SettingsManager.AKSEN_UNGU
+                else         -> SettingsManager.AKSEN_BIRU
+            }
+            settings.simpanAksen(nilai)
+            terapkanWarnaAksen()
+        }
+
         swNotifikasi.setOnCheckedChangeListener { _, aktif ->
             settings.simpanNotifikasi(aktif)
             perbaruiRingkasan()
@@ -80,7 +91,8 @@ class PengaturanActivity : AppCompatActivity() {
 
     // ================= keadaan awal =================
     private fun isiKeadaanAwal(
-        rgBahasa: RadioGroup, rgTema: RadioGroup, rgUkuran: RadioGroup, swNotifikasi: SwitchCompat
+        rgBahasa: RadioGroup, rgTema: RadioGroup, rgUkuran: RadioGroup,
+        rgAksen: RadioGroup, swNotifikasi: SwitchCompat
     ) {
         rgBahasa.check(
             if (settings.ambilBahasa() == SettingsManager.BAHASA_EN) R.id.rbEnglish
@@ -97,6 +109,14 @@ class PengaturanActivity : AppCompatActivity() {
                 else -> R.id.rbSedang
             }
         )
+        rgAksen.check(
+            when (settings.ambilAksen()) {
+                SettingsManager.AKSEN_HIJAU -> R.id.rbHijau
+                SettingsManager.AKSEN_UNGU  -> R.id.rbUngu
+                else -> R.id.rbBiru
+            }
+        )
+        terapkanWarnaAksen()
         swNotifikasi.isChecked = settings.ambilNotifikasi()
         perbaruiRingkasan()
     }
@@ -124,5 +144,10 @@ class PengaturanActivity : AppCompatActivity() {
                 recreate()                                    // segarkan halaman ini
             }
             .show()
+    }
+    private fun terapkanWarnaAksen() {
+        val warna = androidx.core.content.ContextCompat.getColor(this, settings.warnaAksenResId())
+        findViewById<Button>(R.id.btnReset).backgroundTintList =
+            android.content.res.ColorStateList.valueOf(warna)
     }
 }

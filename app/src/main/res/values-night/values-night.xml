@@ -14,4 +14,8 @@
     <color name="warna_ikon_latar">#1F3B2E</color>
 
     <color name="warna_tombol_reset">#FF7B72</color>
+
+    <color name="aksen_hijau">#66BB6A</color>
+    <color name="aksen_biru">#64B5F6</color>
+    <color name="aksen_ungu">#BA68C8</color>
 </resources>

@@ -18,6 +18,9 @@ class SettingsManager(context: Context) {
         const val KEY_TEMA       = "theme"
         const val KEY_UKURAN     = "text_size"
         const val KEY_NOTIFIKASI = "notifikasi"
+        const val KEY_AKSEN = "accent"
+        const val KEY_PROFIL_NAMA   = "profil_nama"
+        const val KEY_PROFIL_AVATAR = "profil_avatar"
 
         // ===== nilai yang sah =====
         const val BAHASA_ID   = "id"
@@ -27,6 +30,13 @@ class SettingsManager(context: Context) {
         const val UKURAN_KECIL  = "small"
         const val UKURAN_SEDANG = "medium"
         const val UKURAN_BESAR  = "large"
+        const val AKSEN_HIJAU = "green"
+        const val AKSEN_BIRU  = "blue"
+        const val AKSEN_UNGU  = "purple"
+
+        val DAFTAR_AVATAR = listOf(
+            R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3
+        )
 
         /** Menerapkan tema & bahasa ke SELURUH aplikasi.
          *  Dipanggil dari MyStudyApp dan setiap kali pengaturan diubah. */
@@ -58,12 +68,33 @@ class SettingsManager(context: Context) {
     fun ambilUkuran(): String = prefs.getString(KEY_UKURAN, UKURAN_SEDANG) ?: UKURAN_SEDANG
     fun simpanUkuran(nilai: String) = prefs.edit().putString(KEY_UKURAN, nilai).apply()
 
+    // ================= WARNA AKSEN =================
+    fun ambilAksen(): String = prefs.getString(KEY_AKSEN, AKSEN_BIRU) ?: AKSEN_BIRU
+    fun simpanAksen(nilai: String) = prefs.edit().putString(KEY_AKSEN, nilai).apply()
+
+    /** id resource warna sesuai aksen yang sedang aktif */
+    fun warnaAksenResId(): Int = when (ambilAksen()) {
+        AKSEN_HIJAU -> R.color.aksen_hijau
+        AKSEN_UNGU  -> R.color.aksen_ungu
+        else        -> R.color.aksen_biru
+    }
+
     /** ukuran teks halaman utama dalam satuan sp */
     fun ukuranTeksSp(): Float = when (ambilUkuran()) {
         UKURAN_KECIL -> 12f
         UKURAN_BESAR -> 17f
         else         -> 14f
     }
+
+    // ================= PROFIL PENGGUNA =================
+    fun ambilNamaProfil(): String = prefs.getString(KEY_PROFIL_NAMA, "") ?: ""
+    fun simpanNamaProfil(nilai: String) = prefs.edit().putString(KEY_PROFIL_NAMA, nilai).apply()
+
+    fun ambilIndeksAvatar(): Int = prefs.getInt(KEY_PROFIL_AVATAR, 0)
+    fun simpanIndeksAvatar(nilai: Int) = prefs.edit().putInt(KEY_PROFIL_AVATAR, nilai).apply()
+
+    fun avatarResId(): Int = DAFTAR_AVATAR[ambilIndeksAvatar()]
+
 
     // ================= NOTIFIKASI =================
     fun ambilNotifikasi(): Boolean = prefs.getBoolean(KEY_NOTIFIKASI, false)

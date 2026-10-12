@@ -23,6 +23,8 @@
         <activity
             android:name=".PengaturanActivity"
             android:exported="false" />
+
+        <activity android:name=".ProfilActivity" android:exported="false" />
     </application>
 
 </manifest>

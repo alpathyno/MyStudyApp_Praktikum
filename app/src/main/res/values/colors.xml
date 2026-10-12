@@ -19,4 +19,8 @@
 
     <!-- dipakai tombol Reset Pengaturan (lihat Langkah 6) -->
     <color name="warna_tombol_reset">#D93025</color>
+
+    <color name="aksen_hijau">#2E7D32</color>
+    <color name="aksen_biru">#1565C0</color>
+    <color name="aksen_ungu">#6A1B9A</color>
 </resources>

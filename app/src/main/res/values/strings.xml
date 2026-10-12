@@ -59,4 +59,18 @@
     <string name="dialog_ya">Ya, reset</string>
     <string name="dialog_batal">Batal</string>
     <string name="toast_reset">Pengaturan dikembalikan ke awal</string>
+
+    <string name="grup_aksen">Warna Aksen</string>
+    <string name="radio_aksen_hijau">Hijau</string>
+    <string name="radio_aksen_biru">Biru</string>
+    <string name="radio_aksen_ungu">Ungu</string>
+
+    <string name="judul_profil">Profil Saya</string>
+    <string name="hint_nama_profil">Nama kamu</string>
+    <string name="btn_ganti_avatar">Ganti Avatar</string>
+    <string name="btn_simpan_profil">Simpan Profil</string>
+    <string name="toast_profil_tersimpan">Profil tersimpan</string>
+    <string name="sapaan_default">Halo, Pelajar!</string>
+    <string name="desc_avatar_profil">Foto profil pengguna</string>
+    <string name="format_sapaan">Halo, %1$s!</string>
 </resources>

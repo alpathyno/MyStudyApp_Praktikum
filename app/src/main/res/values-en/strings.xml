@@ -59,4 +59,18 @@
     <string name="dialog_ya">Yes, reset</string>
     <string name="dialog_batal">Cancel</string>
     <string name="toast_reset">Settings restored to default</string>
+
+    <string name="grup_aksen">Accent Color</string>
+    <string name="radio_aksen_hijau">Green</string>
+    <string name="radio_aksen_biru">Blue</string>
+    <string name="radio_aksen_ungu">Purple</string>
+
+    <string name="judul_profil">My Profile</string>
+    <string name="hint_nama_profil">Your Name</string>
+    <string name="btn_ganti_avatar">Change Avatar</string>
+    <string name="btn_simpan_profil">Save Profile</string>
+    <string name="toast_profil_tersimpan">Profile Saved</string>
+    <string name="sapaan_default">Halo, Student!</string>
+    <string name="desc_avatar_profil">User Profile Photo</string>
+    <string name="format_sapaan">Halo, %1$s!</string>
 </resources>
