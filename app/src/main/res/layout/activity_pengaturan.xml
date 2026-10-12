@@ -103,6 +103,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/radio_gelap"
                     android:textColor="@color/warna_teks_utama" />
+
+                <RadioButton
+                    android:id="@+id/rbSistem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radio_sistem"
+                    android:textColor="@color/warna_teks_utama" />
             </RadioGroup>
         </LinearLayout>
 

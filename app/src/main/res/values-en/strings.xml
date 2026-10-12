@@ -73,4 +73,11 @@
     <string name="sapaan_default">Halo, Student!</string>
     <string name="desc_avatar_profil">User Profile Photo</string>
     <string name="format_sapaan">Halo, %1$s!</string>
+    <string name="dialog_ganti_bahasa_judul">Change Language?</string>
+    <string name="dialog_ganti_bahasa_pesan">The app will switch language and this screen will reload.</string>
+
+    <string name="splash_tagline">Preparing the app…</string>
+
+    <string name="radio_sistem">Following System</string>
+    <string name="singkat_sistem">System</string>
 </resources>

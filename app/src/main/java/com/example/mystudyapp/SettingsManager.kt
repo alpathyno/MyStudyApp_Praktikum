@@ -21,6 +21,7 @@ class SettingsManager(context: Context) {
         const val KEY_AKSEN = "accent"
         const val KEY_PROFIL_NAMA   = "profil_nama"
         const val KEY_PROFIL_AVATAR = "profil_avatar"
+        const val TEMA_SISTEM = "system"
 
         // ===== nilai yang sah =====
         const val BAHASA_ID   = "id"
@@ -45,8 +46,11 @@ class SettingsManager(context: Context) {
 
             // 1) tema: paksa mode terang atau gelap
             AppCompatDelegate.setDefaultNightMode(
-                if (s.ambilTema() == TEMA_GELAP) AppCompatDelegate.MODE_NIGHT_YES
-                else AppCompatDelegate.MODE_NIGHT_NO
+                when (s.ambilTema()) {
+                    TEMA_GELAP  -> AppCompatDelegate.MODE_NIGHT_YES
+                    TEMA_SISTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    else        -> AppCompatDelegate.MODE_NIGHT_NO
+                }
             )
 
             // 2) bahasa: pakai file res/values atau res/values-en
@@ -114,8 +118,11 @@ object RingkasanPengaturan {
             else R.string.singkat_id
         )
         val tema = context.getString(
-            if (s.ambilTema() == SettingsManager.TEMA_GELAP) R.string.singkat_gelap
-            else R.string.singkat_terang
+            when (s.ambilTema()) {
+                SettingsManager.TEMA_GELAP  -> R.string.singkat_gelap
+                SettingsManager.TEMA_SISTEM -> R.string.singkat_sistem
+                else -> R.string.singkat_terang
+            }
         )
         val ukuran = context.getString(
             R.string.singkat_teks,

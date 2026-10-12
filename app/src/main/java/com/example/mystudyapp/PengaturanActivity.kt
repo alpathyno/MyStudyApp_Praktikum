@@ -34,20 +34,42 @@ class PengaturanActivity : AppCompatActivity() {
         isiKeadaanAwal(rgBahasa, rgTema, rgUkuran, rgAksen, swNotifikasi)
 
         // 2) BARU pasang listener: setiap perubahan disimpan & diterapkan
-        rgBahasa.setOnCheckedChangeListener { _, id ->
-            settings.simpanBahasa(
-                if (id == R.id.rbEnglish) SettingsManager.BAHASA_EN
-                else SettingsManager.BAHASA_ID
-            )
-            SettingsManager.terapkanKeAplikasi(this)      // teks langsung berganti bahasa
+        rgBahasa.setOnCheckedChangeListener { group, id ->
+            // abaikan kalau perubahan ini dipicu oleh kode sendiri (saat membatalkan)
+            if (sedangMemprosesBahasa) return@setOnCheckedChangeListener
+
+            val bahasaBaru = if (id == R.id.rbEnglish) SettingsManager.BAHASA_EN else SettingsManager.BAHASA_ID
+            val bahasaLama = settings.ambilBahasa()
+
+            // kalau sama dengan yang sudah tersimpan, tidak perlu konfirmasi apa-apa
+            if (bahasaBaru == bahasaLama) return@setOnCheckedChangeListener
+
+            AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_ganti_bahasa_judul)
+                .setMessage(R.string.dialog_ganti_bahasa_pesan)
+                .setCancelable(false)
+                .setNegativeButton(R.string.dialog_batal) { _, _ ->
+                    // batalkan: kembalikan radio ke pilihan lama TANPA memicu konfirmasi lagi
+                    sedangMemprosesBahasa = true
+                    group.check(if (bahasaLama == SettingsManager.BAHASA_EN) R.id.rbEnglish else R.id.rbIndonesia)
+                    sedangMemprosesBahasa = false
+                }
+                .setPositiveButton(R.string.dialog_ya) { _, _ ->
+                    settings.simpanBahasa(bahasaBaru)
+                    SettingsManager.terapkanKeAplikasi(this)
+                    recreate()
+                }
+                .show()
         }
 
         rgTema.setOnCheckedChangeListener { _, id ->
-            settings.simpanTema(
-                if (id == R.id.rbGelap) SettingsManager.TEMA_GELAP
-                else SettingsManager.TEMA_TERANG
-            )
-            SettingsManager.terapkanKeAplikasi(this)      // tampilan langsung berganti tema
+            val nilai = when (id) {
+                R.id.rbGelap  -> SettingsManager.TEMA_GELAP
+                R.id.rbSistem -> SettingsManager.TEMA_SISTEM
+                else          -> SettingsManager.TEMA_TERANG
+            }
+            settings.simpanTema(nilai)
+            SettingsManager.terapkanKeAplikasi(this)
         }
 
         rgUkuran.setOnCheckedChangeListener { _, id ->
@@ -99,8 +121,11 @@ class PengaturanActivity : AppCompatActivity() {
             else R.id.rbIndonesia
         )
         rgTema.check(
-            if (settings.ambilTema() == SettingsManager.TEMA_GELAP) R.id.rbGelap
-            else R.id.rbTerang
+            when (settings.ambilTema()) {
+                SettingsManager.TEMA_GELAP  -> R.id.rbGelap
+                SettingsManager.TEMA_SISTEM -> R.id.rbSistem
+                else -> R.id.rbTerang
+            }
         )
         rgUkuran.check(
             when (settings.ambilUkuran()) {
@@ -124,6 +149,8 @@ class PengaturanActivity : AppCompatActivity() {
     // ===== LANJUTAN dari PengaturanActivity.kt - bagian 1 di atas =====
 
     // ================= ringkasan pengaturan aktif =================
+
+    private var sedangMemprosesBahasa = false
     private fun perbaruiRingkasan() {
         tvRingkasan.text = RingkasanPengaturan.teks(this, settings)
         tvStatusNotifikasi.text = RingkasanPengaturan.statusNotifikasi(this, settings)

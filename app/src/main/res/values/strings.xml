@@ -73,4 +73,12 @@
     <string name="sapaan_default">Halo, Pelajar!</string>
     <string name="desc_avatar_profil">Foto profil pengguna</string>
     <string name="format_sapaan">Halo, %1$s!</string>
+
+    <string name="dialog_ganti_bahasa_judul">Ganti Bahasa?</string>
+    <string name="dialog_ganti_bahasa_pesan">Aplikasi akan beralih bahasa dan halaman ini akan dimuat ulang.</string>
+
+    <string name="splash_tagline">Menyiapkan aplikasi…</string>
+
+    <string name="radio_sistem">Mengikuti Sistem</string>
+    <string name="singkat_sistem">Sistem</string>
 </resources>
